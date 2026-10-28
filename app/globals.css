@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+:root {
+  --romantic-burgundy: #641d35;
+  --deep-wine: #35111f;
+  --velvet-plum: #48253f;
+  --dusty-rose: #c98298;
+  --blush-pink: #f0c5d1;
+  --warm-ivory: #fff5ed;
+  --champagne-gold: #d6b17a;
+  --candlelight-cream: #f8e8d5;
+  --soft-mauve: #a77b95;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+    background-color: #240914;
+    color: #fff5ed;
+    direction: rtl;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100dvh;
+    margin: 0;
+    background-color: #240914;
+    color: #fff5ed;
+    font-family: var(--font-sans-arabic), system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-wrap: break-word;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  img,
+  svg,
+  video,
+  canvas,
+  audio,
+  iframe {
+    max-width: 100%;
+  }
+
+  ::selection {
+    background-color: rgba(201, 130, 152, 0.38);
+    color: #fff5ed;
+  }
+}
+
+.font-literary {
+  font-family: var(--font-literary-arabic), Georgia, serif;
+}
+
+.font-english-serif {
+  font-family: var(--font-english-serif), var(--font-literary-arabic), Georgia, serif;
+}
+
+/* Warm Ivory & Candlelight Cream Parchment Letter Surface */
+.romantic-parchment {
+  background: linear-gradient(
+    165deg,
+    #fff5ed 0%,
+    #f8e8d5 62%,
+    #f3dfca 100%
+  );
+  color: #35111f;
+  box-shadow:
+    0 22px 60px -15px rgba(20, 5, 11, 0.72),
+    0 4px 0 0 #e6ccb2,
+    0 8px 0 -2px rgba(214, 177, 122, 0.42),
+    inset 0 0 40px rgba(201, 130, 152, 0.12);
+}
+
+/* Deep Wine & Romantic Burgundy Velvet Surface */
+.romantic-velvet {
+  background: linear-gradient(
+    165deg,
+    rgba(100, 29, 53, 0.88) 0%,
+    rgba(72, 37, 63, 0.82) 48%,
+    rgba(53, 17, 31, 0.94) 100%
+  );
+  box-shadow:
+    0 24px 68px -16px rgba(18, 4, 10, 0.82),
+    inset 0 1px 0 rgba(248, 232, 213, 0.18);
+}
+
+@keyframes soundWavePulse {
+  0% {
+    transform: scaleY(0.5);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scaleY(1.15);
+    opacity: 1;
+  }
+}
