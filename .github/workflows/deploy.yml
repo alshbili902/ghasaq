@@ -1,0 +1,63 @@
+
+name: Deploy Ghasaq
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ghasaq-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to AWS
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          set -eu
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Deploy application
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          set -eu
+
+          ssh -o BatchMode=yes \
+            "$SSH_USER@$SSH_HOST" 'bash -se' <<'REMOTE'
+          set -eu
+
+          cd /var/www/ghasaq
+
+          git fetch origin main
+          git reset --hard origin/main
+
+          npm ci
+          npm run lint
+          npm run build
+
+          pm2 reload ecosystem.config.cjs --update-env
+          pm2 save
+
+          echo "Ghasaq deployment completed successfully."
+          REMOTE
